@@ -29,8 +29,8 @@ class TestStateInstance(TypedDict):#可以在这里改值
         "collab_type": "单推",
         "delivery_type": "送拍",
         "video_type": "",
-        "schedule": "", 
-        "product": "",
+        "schedule": "2月15日", 
+        "product": "产品A - 护肤套装",
     },
     {   # [1] 真人
         "maximum_price": "",

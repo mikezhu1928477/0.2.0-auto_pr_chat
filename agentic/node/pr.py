@@ -1,15 +1,15 @@
-from openai import OpenAI
+from openai import AsyncOpenAI
 from dotenv import load_dotenv
 import inspect
 from agentic.state import State
 from prompt.pr_prompt import PR_Prompt
 load_dotenv()           
-client = OpenAI()
+client = AsyncOpenAI()
 
 class PR_Nodes:
 
-    def greet_run(state: State):
-        llm_output = client.responses.create(
+    async def greet_run(state: State):
+        llm_output = await client.responses.create(
             model = "gpt-4.1", 
             input = state["settings"]["creator_latest_response"], 
             previous_response_id = state["settings"]["openai_previous_id"],
@@ -28,8 +28,8 @@ class PR_Nodes:
         print("\n" + llm_output.output_text)
         return {}
     
-    def type_run(state: State):
-        llm_output = client.responses.create(
+    async def type_run(state: State):
+        llm_output = await client.responses.create(
             model = "gpt-4.1", 
             input = state["settings"]["creator_latest_response"], 
             previous_response_id = state["settings"]["openai_previous_id"],
@@ -51,5 +51,67 @@ class PR_Nodes:
 
         print("\n" + llm_output.output_text)
         return {}
+    
+    async def schedule_run(state: State):
+        llm_output = await client.responses.create(
+            model = "gpt-4.1", 
+            input = state["settings"]["creator_latest_response"], 
+            previous_response_id = state["settings"]["openai_previous_id"],
+            instructions=PR_Prompt.NODE3_PROMPT.format(
+                schedule=state["task"][0]["schedule"]
+            )
+        )
+        #需要变成function
+        if "[" in llm_output.output_text and "]" in llm_output.output_text and "结束" in llm_output.output_text:
+            state["settings"]["node_change"] = llm_output.output_text
 
+        #改逻辑
+        state["settings"]["openai_previous_id"]= llm_output.id
+        state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
+        #存储对话
+        print("<存储对话>功能还未添加")
 
+        print("\n" + llm_output.output_text)
+        return {}
+    
+    async def product_run(state: State):
+        llm_output = await client.responses.create(
+            model = "gpt-4.1", 
+            input = state["settings"]["creator_latest_response"], 
+            previous_response_id = state["settings"]["openai_previous_id"],
+            instructions=PR_Prompt.NODE4_PROMPT.format(
+                product=state["task"][0]["product"]
+            )
+        )
+        #需要变成function
+        if "[" in llm_output.output_text and "]" in llm_output.output_text and "结束" in llm_output.output_text:
+            state["settings"]["node_change"] = llm_output.output_text
+
+        #改逻辑
+        state["settings"]["openai_previous_id"]= llm_output.id
+        state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
+        #存储对话
+        print("<存储对话>功能还未添加")
+
+        print("\n" + llm_output.output_text)
+        return {}
+    
+    async def address_run(state: State):
+        llm_output = await client.responses.create(
+            model = "gpt-4.1", 
+            input = state["settings"]["creator_latest_response"], 
+            previous_response_id = state["settings"]["openai_previous_id"],
+            instructions=PR_Prompt.NODE5_PROMPT
+        )
+        #需要变成function
+        if "[" in llm_output.output_text and "]" in llm_output.output_text and "结束" in llm_output.output_text:
+            state["settings"]["node_change"] = llm_output.output_text
+
+        #改逻辑
+        state["settings"]["openai_previous_id"]= llm_output.id
+        state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
+        #存储对话
+        print("<存储对话>功能还未添加")
+
+        print("\n" + llm_output.output_text)
+        return {}
