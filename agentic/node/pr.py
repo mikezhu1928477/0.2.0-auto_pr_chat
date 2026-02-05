@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import inspect
 from agentic.state import State
 from prompt.pr_prompt import PR_Prompt
+from helper.database import add_message
 load_dotenv()           
 client = AsyncOpenAI()
 
@@ -22,11 +23,14 @@ class PR_Nodes:
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
         state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
+        state["settings"]["ai_latest_response"] = llm_output.output_text
+        
+        #存储对话（只存AI消息，人类消息在cmd_send中统一保存）
+        creator_id = state["settings"].get("creator_id", "")
+        if creator_id:
+            add_message(creator_id, "ai", llm_output.output_text, "greet_run")
 
-        print("\n" + llm_output.output_text)
-        return {}
+        return {"settings": state["settings"]}
     
     async def type_run(state: State):
         llm_output = await client.responses.create(
@@ -46,11 +50,14 @@ class PR_Nodes:
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
         state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
+        state["settings"]["ai_latest_response"] = llm_output.output_text
+        
+        #存储对话（只存AI消息，人类消息在cmd_send中统一保存）
+        creator_id = state["settings"].get("creator_id", "")
+        if creator_id:
+            add_message(creator_id, "ai", llm_output.output_text, "type_run")
 
-        print("\n" + llm_output.output_text)
-        return {}
+        return {"settings": state["settings"]}
     
     async def schedule_run(state: State):
         llm_output = await client.responses.create(
@@ -68,11 +75,14 @@ class PR_Nodes:
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
         state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
+        state["settings"]["ai_latest_response"] = llm_output.output_text
+        
+        #存储对话（只存AI消息，人类消息在cmd_send中统一保存）
+        creator_id = state["settings"].get("creator_id", "")
+        if creator_id:
+            add_message(creator_id, "ai", llm_output.output_text, "schedule_run")
 
-        print("\n" + llm_output.output_text)
-        return {}
+        return {"settings": state["settings"]}
     
     async def product_run(state: State):
         llm_output = await client.responses.create(
@@ -90,11 +100,14 @@ class PR_Nodes:
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
         state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
+        state["settings"]["ai_latest_response"] = llm_output.output_text
+        
+        #存储对话（只存AI消息，人类消息在cmd_send中统一保存）
+        creator_id = state["settings"].get("creator_id", "")
+        if creator_id:
+            add_message(creator_id, "ai", llm_output.output_text, "product_run")
 
-        print("\n" + llm_output.output_text)
-        return {}
+        return {"settings": state["settings"]}
     
     async def address_run(state: State):
         llm_output = await client.responses.create(
@@ -110,8 +123,11 @@ class PR_Nodes:
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
         state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
+        state["settings"]["ai_latest_response"] = llm_output.output_text
+        
+        #存储对话（只存AI消息，人类消息在cmd_send中统一保存）
+        creator_id = state["settings"].get("creator_id", "")
+        if creator_id:
+            add_message(creator_id, "ai", llm_output.output_text, "address_run")
 
-        print("\n" + llm_output.output_text)
-        return {}
+        return {"settings": state["settings"]}
