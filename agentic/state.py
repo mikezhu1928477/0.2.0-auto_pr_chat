@@ -45,5 +45,8 @@ class TestStateInstance(TypedDict):#可以在这里改值
         "openai_previous_id": None,#openai的历史id
         "node_change": YES, #改stage的时候这里变
         "node_current": "", #进哪个stage
-        "creator_latest_response": "(你已经加上了博主)" ,#放进input的达人的一串话
+        "creator_latest_response": "" ,#放进input的达人的一串话
+        "ai_latest_response": "", #ai媒介的最新回复
+        "creator_id": "", #博主唯一标识
+        "classification": "", #分类结果: CONTINUE, RETRY, END, QUESTION
     }
