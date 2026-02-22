@@ -17,13 +17,11 @@ class PR_Nodes:
         )
         #需要变成function
         if "[" in llm_output.output_text and "]" in llm_output.output_text and "结束" in llm_output.output_text:
-            state["settings"]["node_change"] = llm_output.output_text
+            state["settings"]["node_change"] = True
+            return {}
 
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
-        state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
 
         print("\n" + llm_output.output_text)
         return {}
@@ -41,13 +39,11 @@ class PR_Nodes:
         )
         #需要变成function
         if "[" in llm_output.output_text and "]" in llm_output.output_text and "结束" in llm_output.output_text:
-            state["settings"]["node_change"] = llm_output.output_text
+            state["settings"]["node_change"] = True
+            return {}
 
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
-        state["settings"]["node_current"] = inspect.currentframe().f_code.co_name
-        #存储对话
-        print("<存储对话>功能还未添加")
 
         print("\n" + llm_output.output_text)
         return {}
