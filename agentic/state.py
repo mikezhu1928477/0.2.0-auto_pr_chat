@@ -28,7 +28,7 @@ class TestStateInstance(TypedDict):#上一个api需传输
             "collab_type": "单推",
             "delivery_type": "送拍",
             "video_type": "",
-            "schedule": "",
+            "schedule": "2月-3月",
             "product": ""
         },
         "real_offer": {
@@ -46,5 +46,5 @@ class TestStateInstance(TypedDict):#上一个api需传输
         "node_change": False, #改stage的时候这里变
         "node_current": "greet_run", #进哪个stage
         "creator_latest_response": "(你已经加上了博主)" ,#放进input的达人的一串话
-        "aipr_output_raw" : None #ai媒介 最新的output
+        "llm_latest_response" : None #ai媒介 最新的output
     }

@@ -1,6 +1,5 @@
 import json
 from agentic.state import State
-NODE_ORDER = ["greet", "type", "brief", "schedule", "product", "address"]
 
 def check_node_dispatcher_node(state: State):
     return{}
@@ -14,6 +13,7 @@ def check_node_dispatcher(state: State):
 
 
 def if_node_change(state: State) -> dict:
+    NODE_ORDER = ["greet_run", "type_run", "schedule_run", "product_run", "address_run"]
     if not state["settings"]["node_change"]:
         return "false_node_change"
     
