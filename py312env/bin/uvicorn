@@ -1,0 +1,10 @@
+#!/bin/sh
+'''exec' "/Users/mikezhu/Desktop/VS Code/feb-pr-agent/0.2.0-auto_pr_chat/py312env/bin/python3" "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+from uvicorn.main import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())

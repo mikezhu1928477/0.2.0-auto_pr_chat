@@ -22,9 +22,10 @@ class PR_Nodes:
 
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
+        state["settings"]["aipr_output_raw"] = llm_output.output_text
 
         print("\n" + llm_output.output_text)
-        return {}
+        return {"settings": state["settings"]}
     
     def type_run(state: State):
         llm_output = client.responses.create(
@@ -32,9 +33,9 @@ class PR_Nodes:
             input = state["settings"]["creator_latest_response"], 
             previous_response_id = state["settings"]["openai_previous_id"],
             instructions=PR_Prompt.NODE2_PROMPT.format( #llm在此node里需要的外部信息
-                price=state["task"][0]["maximum_price"],
-                collab_type=state["task"][0]["collab_type"],
-                delivery_type=state["task"][0]["delivery_type"]
+            price=state["task"]["ai_expected"]["maximum_price"],
+            collab_type=state["task"]["ai_expected"]["collab_type"],
+            delivery_type=state["task"]["ai_expected"]["delivery_type"]
             )
         )
         #需要变成function
@@ -44,6 +45,7 @@ class PR_Nodes:
 
         #改逻辑
         state["settings"]["openai_previous_id"]= llm_output.id
+        state["settings"]["aipr_output_raw"] = llm_output.output_text
 
         print("\n" + llm_output.output_text)
         return {}
