@@ -60,3 +60,33 @@ Request example:
   "recursion_limit": 1000
 }
 ```
+
+## Run With Docker
+
+1. Prepare env file
+
+```bash
+cp .env.example .env
+# edit .env and set OPENAI_API_KEY
+```
+
+2. Build image
+
+```bash
+docker build -t auto-pr-chat:latest .
+```
+
+3. Run container
+
+```bash
+docker run -d --name auto-pr-chat \
+  --env-file .env \
+  -p 8000:8000 \
+  auto-pr-chat:latest
+```
+
+4. Verify
+
+```bash
+curl http://127.0.0.1:8000/health
+```
